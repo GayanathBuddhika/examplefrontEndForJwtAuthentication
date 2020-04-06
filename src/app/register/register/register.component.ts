@@ -1,3 +1,4 @@
+import { User } from './../../models/user';
 import { AlertService } from './../../services/alert.service';
 import { UserService } from './../../services/user.service';
 import { AuthenticationService } from './../../services/authentication.service';
@@ -15,6 +16,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  registerUser: User;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -30,9 +33,13 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
+    //   name: string;
+    // c: string;
+    // password: string;
+    // role: string;
+      name: ['', Validators.required],
+      email: ['', Validators.required],
+      role: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
   });
   }
@@ -50,10 +57,13 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        this.registerUser = this.registerForm.value;
+        console.log("8888888",this.registerUser);
+        this.userService.register(this.registerUser)
             .pipe(first())
             .subscribe(
                 data => {
+                    console.log("register user", data);
                     this.alertService.success('Registration successful', true);
                     this.router.navigate(['/login']);
                 },

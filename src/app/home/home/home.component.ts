@@ -1,7 +1,7 @@
 import { UserService } from './../../services/user.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { AuthUser } from './../../models/authUser';
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit, OnDestroy, } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ import { first } from 'rxjs/operators';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, OnDestroy {
   currentUser: AuthUser;
   currentUserSubscription: Subscription;
   users: AuthUser[] = [];
@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit{
    }
 
   ngOnInit() {
-    this.loadAllUsers();
+    //#############################
+    // this.loadAllUsers();
   }
 
   ngOnDestroy() {

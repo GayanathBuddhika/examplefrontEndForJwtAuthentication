@@ -1,3 +1,4 @@
+import { RespondUser } from './../../models/respondUsre';
 import { AlertService } from './../../services/alert.service';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  respondUser: RespondUser;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -50,7 +52,9 @@ export class LoginComponent implements OnInit {
       }
 
       this.loading = true;
-      this.authenticationService.login(this.f.username.value, this.f.password.value)
+      this.respondUser = this.loginForm.value;
+      console.log("log form submit..", this.respondUser)
+      this.authenticationService.login(this.respondUser)
           .pipe(first())
           .subscribe(
               data => {

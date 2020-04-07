@@ -1,3 +1,5 @@
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { DropdownModule } from 'primeng/dropdown';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/iwt.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,12 +8,19 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './home/home/home.component';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './register/register/register.component';
+import { UserComponent } from './components/user/user.component';
+import { AdduserComponent } from './components/user/adduser/adduser.component';
+import { ListUserComponent } from './components/user/list-user/list-user.component';
+import { LeaveTypeComponent } from './components/leave-type/leave-type.component';
+import { AddLeaveTypeComponent } from './components/leave-type/add-leave-type/add-leave-type.component';
+import { ListleaveTypeComponent } from './components/leave-type/listleave-type/listleave-type.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,13 +31,27 @@ import { RegisterComponent } from './register/register/register.component';
 
     LoginComponent,
 
-    RegisterComponent
+    RegisterComponent,
+
+    UserComponent,
+
+    AdduserComponent,
+
+    ListUserComponent,
+
+    LeaveTypeComponent,
+
+    AddLeaveTypeComponent,
+
+    ListleaveTypeComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DropdownModule,
+    ModalModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

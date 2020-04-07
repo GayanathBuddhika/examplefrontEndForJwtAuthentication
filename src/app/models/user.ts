@@ -4,4 +4,10 @@ export class User{
     email: string;
     password: string;
     role: string;
+    employeeId: string;
+    phoneNo: string;
+    address: string;
+    edit: boolean;
+
+    
 }

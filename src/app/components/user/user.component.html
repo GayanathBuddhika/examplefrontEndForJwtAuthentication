@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="row">
+        <h2>User Details</h2>
+    </div>
+    <div class="row">
+        <button [disabled]="loading" class="btn btn-primary" (click)="openModal(addUserTemplate)">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Add User
+        </button>       
+    </div>    
+    <div class="row">
+        <app-list-user></app-list-user>
+    </div>
+    
+
+</div>
+
+<!-- for add user modal -->
+<ng-template #addUserTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add User</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-adduser></app-adduser>
+      </div>
+  </ng-template>

@@ -1,0 +1,55 @@
+
+
+<table class="table table-striped" >
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Employee_Id</th>
+            <th scope="col">name</th>
+            <th scope="col">email</th>
+            <th scope="col">Phone_Number</th>
+            <th scope="col">Address</th>
+            <th scope="col">Role</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            
+        </tr>
+    </thead>
+   
+    <tbody>
+        <tr *ngFor="let user of userList; let i = index">
+            <th>{{i+1}}</th>
+            <th>{{user.employeeId}}</th>
+            <th>{{user.name}}</th>
+            <th>{{user.email}}</th>
+            <th>{{user.phoneNo}}</th>
+            <th>{{user.address}}</th>
+            <th>{{user.role}}</th>
+            <td align="center">          
+                <button class="btn-lg btn-custom  btn-success" (click)="edit(user,userEditTemplate)">Edit</button>
+              </td>
+            <th align="center">
+                <button class="btn-lg btn-custom  btn-danger" (click)="delete(user)">Delete</button>
+            </th>
+        </tr>
+        <tr *ngIf="!userList.length">
+            <p class="text-center"><b>No records found</b></p>                       
+        </tr>
+    </tbody>
+    
+</table>
+
+
+
+<!-- for edit button -->
+<ng-template #userEditTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit User</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-adduser [editUser]="editUser" [edit]="true"></app-adduser>
+  </div>
+</ng-template>

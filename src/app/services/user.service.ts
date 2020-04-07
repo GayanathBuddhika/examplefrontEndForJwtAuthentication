@@ -1,3 +1,4 @@
+import { RespondUser } from './../models/respondUsre';
 import { map } from 'rxjs/operators';
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
@@ -35,8 +36,8 @@ export class UserService {
     return this.http.get<any>("http://localhost:8080/user/findAll")
   }
 
-  register(user: User) {
-    return this.http.post<any>("http://localhost:8080/register", user)
+  register(user: RespondUser) {
+    return this.http.post<any>("http://localhost:8080/register", user);
 
   }
 

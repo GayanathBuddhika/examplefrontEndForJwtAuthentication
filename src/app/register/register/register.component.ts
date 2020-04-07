@@ -1,3 +1,4 @@
+import { RespondUser } from './../../models/respondUsre';
 import { User } from './../../models/user';
 import { AlertService } from './../../services/alert.service';
 import { UserService } from './../../services/user.service';
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
-  registerUser: User;
+  registerUser = new RespondUser();
+  roleList: any[]=[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,6 +34,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getRoleList();
     this.registerForm = this.formBuilder.group({
     //   name: string;
     // c: string;
@@ -57,7 +60,8 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.registerUser = this.registerForm.value;
+        this.registerUser.username = this.registerForm.get('email').value;
+        this.registerUser.password = this.registerForm.get('password').value;
         console.log("8888888",this.registerUser);
         this.userService.register(this.registerUser)
             .pipe(first())
@@ -71,6 +75,10 @@ export class RegisterComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+
+    getRoleList(){
+      this.roleList = this.userService.role;
     }
 
 }

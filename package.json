@@ -47,6 +47,6 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3",
-    "jquery": "^1.9.1"
+    "jquery": "^3.4.0"
   }
 }

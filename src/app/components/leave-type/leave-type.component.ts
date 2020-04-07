@@ -31,4 +31,4 @@ export class LeaveTypeComponent implements OnInit {
   }
 }
 
-}
+

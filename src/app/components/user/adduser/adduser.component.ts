@@ -74,7 +74,6 @@ export class AdduserComponent implements OnInit, AfterViewInit {
       this.saveUser.edit = false;
     }
     
-    this.saveUser.edit = this.edit;
     this.userService.save(this.saveUser).subscribe(data => {
       console.log("save user data", data);
       this.loading = false;

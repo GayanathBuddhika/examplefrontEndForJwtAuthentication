@@ -54,6 +54,8 @@ export class ListUserComponent implements OnInit {
 
    this.userService.delete(user.id).subscribe(data =>{
     console.log("delete user", data);
+    let index = this.userList.indexOf(user);
+    this.userList = this.userList.filter((val, i) => i != index);
    },err =>{
      console.log(err);
    })

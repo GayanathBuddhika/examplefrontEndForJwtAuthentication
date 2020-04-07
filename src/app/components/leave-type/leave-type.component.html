@@ -3,22 +3,22 @@
         <h2>Leave Type Details</h2>
     </div>
     <div class="row">
-        <button [disabled]="loading" class="btn btn-primary" (click)="openModal(addUserTemplate)">
+        <button [disabled]="loading" class="btn btn-primary" (click)="openModal(addleaveTemplate)">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             Add leave Type
         </button>       
     </div>    
     <div class="row">
-        <app-listleave-typer></app-listleave-type>
+        <app-listleave-type></app-listleave-type>
     </div>
     
 
 </div>
 
-<!-- for add user modal -->
-<ng-template #addLeaveTypeTemplate>
+  <!-- for add user modal -->
+<ng-template #addleaveTemplate>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Add Leave Type</h4>
+        <h4 class="modal-title pull-left">Add User</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>

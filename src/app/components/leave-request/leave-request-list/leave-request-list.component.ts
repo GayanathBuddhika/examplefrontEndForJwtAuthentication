@@ -1,7 +1,7 @@
 import { User } from './../../../models/user';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { LeaveRequestService } from './../../../services/leave-request.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { LeaveRequest } from 'src/app/models/leaveRequest';
 
@@ -15,39 +15,40 @@ export class LeaveRequestListComponent implements OnInit {
   requestList: LeaveRequest[]=[];
   editRequest: LeaveRequest;
   currentUser: User;
+  reApproved : boolean = false;
   constructor(
     private leaveRequestService: LeaveRequestService,
-    private authentication: AuthenticationService;
+    private authentication: AuthenticationService,
     private modalService: BsModalService
   ) { 
     this.currentUser = this.authentication.currentUserValue.myuser;
   }
 
   ngOnInit() {
-    
+    console.log("***********",this.currentUser.role);
     if(this.currentUser.role === "DEPARTMENT_HEAD"){
       this.getAllRequest();
     }else{
       this.getAllRequestById(this.currentUser.id);
     }
-    // this.userService.get_ngxModal_edit_$().subscribe(data =>{
-    //   if(data){
-    //     this.modalRef.hide();
-    //     this.userService._set_ngxModal_add(false);
-    //   }
+    this.leaveRequestService.get_ngxModal_edit_$().subscribe(data =>{
+      if(data){
+        this.modalRef.hide();
+        this.leaveRequestService._set_ngxModal_add(false);
+      }
     
-    // })
-    // this.userService._addUserToList.subscribe(data => {
-    //   let userL = [... this.userList];
-    //   userL.unshift(data);
-    //   this.userList = userL;
+    })
+    this.leaveRequestService._addleaveRequestToList.subscribe(data => {
+      let requestL = [... this.requestList];
+      requestL.unshift(data);
+      this.requestList = requestL;
 
-    // })
+    })
 
-    // this.userService._editUserToList.subscribe(data => {
-    //   let index = this.userList.findIndex(user => user.id === data.id);
-    //   this.userList[index] = data;
-    // })
+    this.leaveRequestService._editleaveRequestToList.subscribe(data => {
+      let index = this.requestList.findIndex(user => user.id === data.id);
+      this.requestList[index] = data;
+    })
 
   }
 
@@ -60,36 +61,51 @@ export class LeaveRequestListComponent implements OnInit {
       console.log(err);
     })
   }
+
   getAllRequestById(id: string){
-    this.leaveRequestService.getAllByUserId().subscribe(data =>{
+    this.leaveRequestService.getAllByUserId(id).subscribe(data =>{
       this.requestList = data;
-      console.log("all dadta by id", data);s
+      console.log("all dadta by id", data);
     },err =>{
       console.log(err);
     })
   }
 
 
-  // delete(user: User){
+  delete(request: LeaveRequest ){
 
-  //  this.userService.delete(user.id).subscribe(data =>{
-  //   console.log("delete user", data);
-  //   let index = this.userList.indexOf(user);
-  //   this.userList = this.userList.filter((val, i) => i != index);
-  //  },err =>{
-  //    console.log(err);
-  //  })
-  // }
+   this.leaveRequestService.delete(request.id).subscribe(data =>{
+    console.log("delete user", data);
+    let index = this.requestList.indexOf(request);
+    this.requestList = this.requestList.filter((val, i) => i != index);
+   },err =>{
+     console.log(err);
+   })
+  }
 
-  // edit(user: User, template: TemplateRef<any>){
-  //   console.log("edit user", user);
-  //   this.editUser= user;
-  //   this.openModal(template);
-  // }
+  edit(request: LeaveRequest, template: TemplateRef<any>){
+    console.log("edit user", request);
+    this.editRequest= request;
+    this.openModal(template);
+  }
+
+  approved(request: LeaveRequest){
+    this.leaveRequestService.apprved(request.id).subscribe(data =>{
+      console.log("aproved", data);
+      this.reApproved = true;
+      let index = this.requestList.findIndex(user => user.id === request.id);
+      this.requestList[index].approve =true;
+      // let index = this.requestList.indexOf(request);
+      // this.requestList[index].approve = true;
+    },err =>{
+      console.log(err);
+      this.reApproved = false;
+    })
+  }
   
-  // openModal(template: TemplateRef<any>) {
-  //   this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
-  // }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+  }
 
 
 }

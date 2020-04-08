@@ -1,1 +1,65 @@
-<p>leave-request-list works!</p>
+
+
+<table class="table table-striped" >
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">user Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Leave Type</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">description</th>           
+            <th scope="col">Role</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">approved</th>
+            
+        </tr>
+    </thead>
+   
+    <tbody>
+        <tr *ngFor="let request of requestList; let i = index">
+            <th>{{i+1}}</th>
+            <th>{{request.user.name}}</th>
+            <th>{{request.user.email}}</th>
+            <th>{{request.user.phoneNo}}</th>
+            <th>{{request.leaveType.type}}</th>
+            <th>{{request.startDate}}</th>
+            <th>{{request.endDate}}</th>
+            <th>{{request.description}}</th>
+            <th>{{request.user.role}}</th>
+            <td align="center">          
+                <button class="btn-lg btn-custom  btn-success"  *ngIf="!request.approved" (click)="edit(request,userEditTemplate)">Edit</button>
+              </td>
+            <th align="center">
+                <button class="btn-lg btn-custom  btn-danger" (click)="delete(request)">Delete</button>
+            </th>
+            <th align="center">
+                <button class="btn-lg btn-custom  btn-danger" *ngIf="!request.approve" (click)="approved(request)">Pendin...</button>
+                <button class="btn-lg btn-custom  btn-success" *ngIf="request.approve" disable="true">Approved</button>
+            </th>
+        </tr>
+        <tr *ngIf="!requestList.length">
+            <p class="text-center"><b>No records found</b></p>                       
+        </tr>
+    </tbody>
+    
+</table>
+
+
+
+<!-- for edit button -->
+<ng-template #userEditTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Request</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-leave-request-add [editRequest]="editRequest" [edit]="true"></app-leave-request-add>
+  </div>
+</ng-template>
+

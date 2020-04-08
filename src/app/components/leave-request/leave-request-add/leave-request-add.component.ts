@@ -1,3 +1,5 @@
+import { User } from './../../../models/user';
+import { AuthenticationService } from './../../../services/authentication.service';
 import { LeaveTypeService } from './../../../services/leave-type.service';
 import { LeaveType } from 'src/app/models/LeaveType';
 import { LeaveRequestService } from './../../../services/leave-request.service';
@@ -22,17 +24,20 @@ export class LeaveRequestAddComponent implements OnInit, AfterViewInit {
   mindateForStart: Date;
   mindateForEnddate: Date;
   maxDateforEndDate: Date;
+  currentUser: User;
   // edit: false;
   @Input() editRequest: LeaveRequest;
   @Input() edit: boolean = false;
   constructor(
     private leaveRequestService: LeaveRequestService,
     private leaveTypeService: LeaveTypeService,
+    private authentication: AuthenticationService,
     private formBuilder: FormBuilder,
    
 
   ) {
     this.mindateForStart = new Date();
+    this.currentUser = this.authentication.currentUserValue.myuser;
     
     
    }
@@ -53,8 +58,10 @@ export class LeaveRequestAddComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     if(this.edit){
-      this.requestForm.get('leaveType').patchValue(this.editRequest.leaveType.type);
+      this.requestForm.get('leaveType').patchValue(this.editRequest.leaveType);
+      this.requestForm.get('description').setValue(this.editRequest.description);
       this.requestForm.get('startDate').setValue(this.editRequest.startDate);
+      this.requestForm.get('endDate').setValue(this.editRequest.endDate);
   
     }
   
@@ -63,11 +70,11 @@ export class LeaveRequestAddComponent implements OnInit, AfterViewInit {
       // convenience getter for easy access to form fields
   get f() { return this.requestForm.controls; }
 
-  // onSelectedStartDate(){
+    onSelectedStartDate(event: any){
   //  const  ss: Date = this.requestForm.get('startDate').value ;
   //   console.log("start  date***",this.requestForm.get('startDate').value );
   //   this.mindateForEnddate.setDate(ss.getDate());
-  // }
+  }
   changerole(event) {
     console.log("**************", event.target.value);
   }
@@ -93,6 +100,9 @@ export class LeaveRequestAddComponent implements OnInit, AfterViewInit {
     this.saveRequest.description = this.requestForm.get('description').value;
     this.saveRequest.startDate = this.requestForm.get('startDate').value;
     this.saveRequest.endDate = this.requestForm.get('endDate').value;
+    this.saveRequest.approve = false;
+    this.saveRequest.user = this.currentUser;
+ 
     if(this.edit){
       this.saveRequest.id = this.editRequest.id;
       this.saveRequest.edit = true;

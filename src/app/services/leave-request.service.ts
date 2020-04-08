@@ -19,7 +19,7 @@ export class LeaveRequestService {
   getAll() {
     return this.http.get<any>("http://localhost:8080/leaveRequest/findAll")
   }
-  getAllByUserId() {
+  getAllByUserId(requestId: string) {
     return this.http.get<any>("http://localhost:8080/leaveRequest/findAllByUserId")
   }
 

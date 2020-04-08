@@ -1,0 +1,72 @@
+
+<form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+
+
+    
+    <div class="form-group">   
+       
+        <label for="leaveType">Select a leave Type</label>
+         <select class="form-control" formControlName="leaveType" [ngClass]="{ 'is-invalid': submitted && f.leaveType.errors }">
+        <option value="" disabled>select a role</option>
+        <option *ngFor="let leave of leaveTypeList" [ngValue] = "leave"  >{{leave.type}}</option>     
+        
+        </select>
+        <div *ngIf="submitted && f.leaveType.errors" class="invalid-feedback">
+            <div *ngIf="f.leaveType.errors.required">leaveType is required</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Address</label>
+        <textarea formControlName="description" class="form-control" rows="5" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">Address is required</div>
+        </div>
+    </div>
+
+
+    <!-- <label for="datemax">Enter a date before 1980-01-01:</label>
+  <input type="date" id="datemax" name="datemax" max="1979-12-31"><br><br>
+
+  <label for="datemin">Enter a date after 2000-01-01:</label>
+  <input type="date" id="datemin" name="datemin" min="2000-01-02"><br><br> -->
+    <div class="form-group">
+        <label for="startDate">Start data</label>       
+        <input
+        class="form-control"
+        #datepickerYMD="bsDatepicker"
+        bsDatepicker
+        formControlName="startDate"
+        (ngModelChange)="onSelectedStartDate($event)"
+        [minDate]="mindateForStart"
+        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+        <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+            <div *ngIf="f.startDate.errors.required">Start Date is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="endDate">End date</label>
+        <!-- <input type="date" formControlName="endDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }" /> -->
+        <input
+        class="form-control"
+        #datepickerYMD="bsDatepicker"
+        bsDatepicker
+        formControlName="endDate"       
+        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }">
+       
+        <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+            <div *ngIf="f.endDate.errors.required">End date  is required</div>
+        </div>
+    </div>
+    
+        
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+             submit
+        </button>
+    </div>
+    
+</form>
+
+

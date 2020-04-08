@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LeaveTypeComponent } from './components/leave-type/leave-type.component';
+import { LeaveRequestComponent } from './components/leave-request/leave-request.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'user', component: UserComponent },
   { path: 'leavetype', component: LeaveTypeComponent },
+  { path: 'request', component: LeaveRequestComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
